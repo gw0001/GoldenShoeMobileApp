@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GoldenShoeMobileApp.Views.ShoppingCart"
+             xmlns:viewModels="clr-namespace:GoldenShoeMobileApp.ViewModels"
+             x:Name="ShoppingCartPage"
+             BackgroundColor="Black">
+
+    <!-- Obtain binding context from the shoes view model class-->
+    <ContentPage.BindingContext>
+        <viewModels:CartViewModel/>
+    </ContentPage.BindingContext>
+    <!-- New Grid for displaying selected show -->
+    <Grid Padding="10" 
+          HorizontalOptions="FillAndExpand" 
+          VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+
+            <!-- First Extra Space -->
+            <RowDefinition Height="10"/>
+
+            <!-- Shopping Title Message -->
+            <RowDefinition Height="50"/>
+
+            <!-- Shopping Cart Message -->
+            <RowDefinition Height="40"/>
+
+            <!-- Cart Headers -->
+            <RowDefinition Height="40"/>
+            
+            <!-- Shoe Listing Row-->
+            <RowDefinition Height="*"/>
+            
+            <!-- Total Cost Message-->
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+        <!-- Display Page title -->
+        <Label Grid.Row="1"
+               LineBreakMode="WordWrap"
+               Text="SHOPPING CART"
+               TextColor="Goldenrod" 
+               FontAttributes="Bold"
+               TextTransform="Uppercase"
+               FontSize="30"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center"/>
+        
+        <!-- Display Cart Message -->
+        <Label Grid.Row="2"
+               LineBreakMode="WordWrap"
+               Text="{Binding CartMessage}"
+               TextColor="White" 
+               FontSize="18"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center"/>
+
+        <!-- Nested Grid in fourth row for price and stock alert message -->
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+
+                <!-- Price column -->
+                <ColumnDefinition Width="60"/>
+
+                <!-- Price column -->
+                <ColumnDefinition Width="225"/>
+
+                <!-- Stock Message column -->
+                <ColumnDefinition Width="75"/>
+
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0"
+                   Text="QTY"
+                   TextColor="White"
+                   BackgroundColor="#505050"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   />
+
+            <Label Grid.Column="1"
+                   Text="Desc"
+                   TextColor="White"
+                   BackgroundColor="#505050"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"/>
+
+            <Label Grid.Column="2"
+                   Text="Sub Total"
+                   TextColor="White"
+                   BackgroundColor="#505050"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"/>
+        </Grid>
+
+        <CollectionView x:Name="ShoeList" 
+                        Margin="0,5,0,0" 
+                        Grid.Row="4" 
+                        BackgroundColor="White"
+                        ItemsSource="{Binding Orders}" 
+                        SelectionMode="Single" 
+                        VerticalScrollBarVisibility="Never">
+
+
+            <!-- Item Layout -->
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" 
+                                 VerticalItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <!-- Template for item display -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!-- Price column -->
+                            <ColumnDefinition Width="60"/>
+
+                            <!-- Price column -->
+                            <ColumnDefinition Width="225"/>
+
+                            <!-- Stock Message column -->
+                            <ColumnDefinition Width="75"/>
+                        
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" 
+                               Text="{Binding Order.SubQuantity}"
+                               TextColor="Black"/>
+                        <Label Grid.Column="1" 
+                               Text="{Binding Order.Shoe.Name}"
+                               TextColor="Black"/>
+                        <Label Grid.Column="2" 
+                               Text="{Binding Order.SubTotal}"
+                               TextColor="Black"/>
+
+                    </Grid>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Display Total Cost -->
+        <Label Grid.Row="5"
+               Text="{Binding TotalCost, StringFormat='Total: £{0}'}"
+               TextColor="White" 
+               FontAttributes="Bold"
+               TextTransform="Uppercase"
+               FontSize="25"
+               VerticalOptions="Start" 
+               HorizontalOptions="End"/>
+
+    </Grid>
+
+
+
+
+
+
+</ContentPage>

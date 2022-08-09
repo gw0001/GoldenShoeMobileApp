@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:GoldenShoeMobileApp.Views"
+       xmlns:viewModels="clr-namespace:GoldenShoeMobileApp.ViewModels"
+       x:Class="GoldenShoeMobileApp.AppShell"
+       FlyoutBackgroundColor="#131313" 
+       FlyoutWidth="250">
+
+    <!-- Shell Resources-->
+    <Shell.Resources>
+        
+        <!-- Base Style -->
+        <Style x:Key="BaseStyle" TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="Black"/>
+            <Setter Property="Shell.ForegroundColor" Value="DarkGoldenrod"/>
+            <Setter Property="Shell.TitleColor" Value="DarkGoldenrod"/>
+            <Setter Property="Shell.FlyoutBackgroundColor" Value="Black"/>
+        </Style>
+        
+        <!-- Override the Base Stye -->
+        <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}"/>
+
+        <!--Menu Item Style -->
+        <Style x:Key="MenuItemStyle" TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal"/>
+
+                        <!-- Selected Visual State -->
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="LightGoldenrodYellow"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+    </Shell.Resources>
+
+    <!--Shell Template -->
+    <Shell.ItemTemplate>
+        <DataTemplate >
+            <!-- Set Grid Style from Shell Resources-->
+            <Grid Style="{StaticResource MenuItemStyle}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
+                </Grid.ColumnDefinitions>
+                
+                <!-- Flyout Item Icon -->
+                <Image Source="{Binding Icon}"
+                    Margin="5"
+                    HeightRequest="60" />
+                
+                <!-- Flyout Item Grid Element -->
+                <Label Grid.Column="1"
+                       Text="{Binding Title}"
+                       TextTransform="Uppercase"
+                       FontAttributes="Bold"
+                       TextColor="DarkGoldenrod"
+                       FontSize="22"
+                       VerticalTextAlignment="Center" 
+                       HorizontalOptions="Start"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+    
+    <!-- Flyout Menu Header -->
+    <Shell.FlyoutHeader>
+        <Label Text="Menu" 
+               TextColor="DarkGoldenrod"
+               BackgroundColor="Black"
+               TextTransform="Uppercase"
+               FontAttributes="Bold"
+               FontSize="30"
+               HorizontalTextAlignment="Center" 
+               VerticalTextAlignment="Start"/>
+    </Shell.FlyoutHeader>
+
+    <!-- Menu Label -->
+
+    
+    <!-- Main Page Item-->
+    <FlyoutItem Title="Home Page"
+                Icon="iconHome.png">
+        <ShellContent>
+            <views:MainPage/>
+        </ShellContent>
+    </FlyoutItem>
+
+    <!-- Product Page -->
+    <FlyoutItem Title="Shoes"
+                Icon="iconShoe.png">
+        <ShellContent >
+            <views:ShoePage/>
+        </ShellContent>
+    </FlyoutItem>
+
+    <!-- Cart - WILL NEED TO WORK ON CART CHANGING ICON WHEN CART HAS AN ITEM AND TITLE TO DISPLAY A NUMBER WHEN ADDED TO THE CART -->
+    <FlyoutItem Title="Cart"
+                Icon="iconCart.png">
+        <ShellContent>
+            <views:ShoppingCart/>
+        </ShellContent>
+    </FlyoutItem>
+
+</Shell>

@@ -6,15 +6,22 @@ namespace GoldenShoeMobileApp
 {
     public partial class App : Application
     {
+        /// <summary>
+        /// Application constructor
+        /// </summary>
         public App()
         {
+            // Initialise the component
             InitializeComponent();
 
-            MainPage = new MainPage();
+            // Set the main page to a new instance of the app shell
+            MainPage = new AppShell();
         }
 
         protected override void OnStart()
         {
+            // Invoke the populate shoe list function to populate the global shoe list
+            AppData.PopulateShoeList();
         }
 
         protected override void OnSleep()

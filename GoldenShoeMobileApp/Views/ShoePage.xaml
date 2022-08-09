@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewModels="clr-namespace:GoldenShoeMobileApp.ViewModels"
+             x:Class="GoldenShoeMobileApp.Views.ShoePage"
+             x:Name="Shoes"
+             BackgroundColor="#131313">
+
+    <!-- Obtain binding context from the shoes view model class-->
+    <ContentPage.BindingContext>
+        <viewModels:ShoesViewModel/>
+    </ContentPage.BindingContext>
+    
+    <!-- Set up a grid for displaying items-->
+    <Grid Padding="5" 
+          HorizontalOptions="FillAndExpand" 
+          VerticalOptions="FillAndExpand">
+
+        <!-- Row Definitions -->
+        <Grid.RowDefinitions>
+            <!-- First Extra Space -->
+            <RowDefinition Height="10"/>
+            
+            <!-- Full Product message -->
+            <RowDefinition Height="40"/>
+
+            <!-- Extra space -->
+            <RowDefinition Height="10"/>
+
+            <!-- Shoe Listing Row-->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Adding Box Views to give colour to row elements -->
+        <!-- Used to separate Filter options from the product list -->
+        <BoxView Grid.Row="0" 
+                 BackgroundColor="#252525"
+                 HorizontalOptions="Fill"/>
+        <BoxView Grid.Row="1" 
+                 BackgroundColor="#252525"
+                 HorizontalOptions="Fill"/>
+        <BoxView Grid.Row="2" 
+                 BackgroundColor="#252525"
+                 HorizontalOptions="Fill"/>
+
+        <!-- Display filter label in first row of grid -->
+        <Label Grid.Row="1"
+               Text="Full Product List"
+               TextColor="White"
+               FontSize="25"
+               FontAttributes="Bold"
+               TextTransform="Uppercase"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center"/>
+
+        <!-- Set up a collection view for displaying the items -->
+        <CollectionView x:Name="ShoeList" 
+                        Margin="10,10,10,0" 
+                        Grid.Row="3" 
+                        BackgroundColor="Black"
+                        ItemsSource="{Binding Shoes}" 
+                        SelectionMode="Single" 
+                        SelectedItem="{Binding SelectedShoe}"
+                        VerticalScrollBarVisibility="Never"
+                        SelectionChangedCommand="{Binding SelectionCommand}">
+            
+            <!-- Item Layout -->
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" 
+                                 VerticalItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <!-- Template for item display -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Create Nested Grid for showing each shoe-->
+                    <Grid Padding="10" 
+                          BackgroundColor="#505050">
+                        <Grid.RowDefinitions>
+                            <!-- Definition of row for Name -->
+                            <RowDefinition Height="Auto"/>
+
+                            <!-- Definition of row for Short Description and Price-->
+                            <RowDefinition Height="Auto"/>
+
+                            <!-- Definition of row for stock check label -->
+                            <RowDefinition Height="Auto"/>
+
+
+                            <!-- Definition of row for "Tap to view more Info -->
+                            <RowDefinition Height="16"/>
+
+                            <!-- second row definition -->
+                        </Grid.RowDefinitions>
+
+                        <!-- Name label in first row of nested grid -->
+                        <Label Grid.Row="0"
+                               LineBreakMode="WordWrap"
+                               Text="{Binding Name}" 
+                               TextColor="Goldenrod" 
+                               FontAttributes="Bold"
+                               TextTransform="Uppercase"
+                               FontSize="20"
+                               VerticalOptions="Start" 
+                               HorizontalOptions="Start"/>
+
+                        <!-- Create new nested Grid at Row 1 -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <!-- Definition of row for Image, Name, and Short Description -->
+                                <ColumnDefinition Width="Auto"/>
+
+                                <!-- Definition of row for price, view more info button, stock status and price-->
+                                <ColumnDefinition Width="*"/>
+
+                                <!-- second row definition -->
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Product Image in the first column of the nested grid-->
+                            <Image Grid.Column="0"
+                                   Aspect="AspectFit" 
+                                   Source="{Binding Image}" 
+                                   Margin="10" 
+                                   WidthRequest="150"
+                                   HorizontalOptions="Center" 
+                                   VerticalOptions="Start"/>
+
+                            <!-- Short Description in second column -->
+                            <Label Grid.Column="1"
+                               LineBreakMode="WordWrap"
+                               Text="{Binding ShortDescription}" 
+                               TextColor="White" 
+                               FontSize="18"
+                               VerticalOptions="Start" 
+                               HorizontalOptions="Start"/>
+
+                            <!-- Display Price-->
+                            <Label Grid.Column="1"
+                               LineBreakMode="WordWrap"
+                               Text="{Binding Price, StringFormat='£{0}'}" 
+                               TextColor="White" 
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               VerticalOptions="End" 
+                               HorizontalOptions="End"/>
+                        </Grid>
+
+                        <!-- Display stock status in third row -->
+                        <!-- Will need to get variable that returns stock string and colour -->
+                        <Label Grid.Row="2"
+                               LineBreakMode="WordWrap"
+                               Text="{Binding StockMessage}" 
+                               TextColor="{Binding StockMessageColour}" 
+                               FontAttributes="Bold"
+                               TextTransform="Uppercase"
+                               FontSize="20"
+                               VerticalOptions="Start" 
+                               HorizontalOptions="Start"/>
+
+                        <!-- Tap for More Info Label -->
+                        <Label Grid.Row="3"
+                               LineBreakMode="WordWrap"
+                               Text="Tap panel for more info" 
+                               TextColor="White" 
+                               FontSize="14"
+                               VerticalOptions="Center" 
+                               HorizontalOptions="Center"/>
+
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

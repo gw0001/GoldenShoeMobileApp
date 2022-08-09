@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GoldenShoeMobileApp.Views.ShoeDetails"
+             x:Name="Details"
+             BackgroundColor="#131313">
+
+    <!-- New Grid for displaying selected show -->
+    <Grid Padding="10" 
+          HorizontalOptions="FillAndExpand" 
+          VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            
+            <!-- Item name row-->
+            <RowDefinition Height="Auto"/>
+            
+            <!-- Image row -->
+            <RowDefinition Height="Auto"/>
+
+            <!-- Description Row-->
+            <RowDefinition Height="Auto"/>
+            
+            <!-- Price and Stock message row-->
+            <RowDefinition Height="Auto"/>
+            
+            <!-- Stock message -->
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+
+        <!-- Display the Shoe Name-->
+        <Label Grid.Row="0"
+               LineBreakMode="WordWrap"
+               Text="{Binding Name}"
+               TextColor="Goldenrod" 
+               FontAttributes="Bold"
+               TextTransform="Uppercase"
+               FontSize="24"
+               VerticalOptions="Center" 
+               HorizontalOptions="Start"/>
+        
+        <!-- Display Shoe image-->
+        <Image Grid.Row="1"
+               Source="{Binding Image}"
+               Aspect="AspectFit"
+               Margin="10" 
+               WidthRequest="250"
+               HorizontalOptions="Center" 
+               VerticalOptions="Start"/>
+
+        <!-- Display Shoe description -->
+        <Label Grid.Row="2"
+               LineBreakMode="WordWrap"
+               Text="{Binding Description}"
+               TextColor="White" 
+               FontSize="18"
+               VerticalOptions="Start" 
+               HorizontalOptions="Start"/>
+
+        <!-- Nested Grid in fourth row for price and stock alert message -->
+        <Grid Row="3">
+            <Grid.ColumnDefinitions>
+
+                <!-- Price column -->
+                <ColumnDefinition Width="Auto"/>
+
+                <!-- Stock Message column -->
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+
+            <!-- Display Price -->
+            <Label Grid.Column="0"
+               LineBreakMode="WordWrap"
+               Text="{Binding Price, StringFormat='£{0}'}"
+               TextColor="White" 
+               FontSize="25"
+               VerticalOptions="Start" 
+               HorizontalOptions="Start"/>
+
+            <!-- Display Stock Message -->
+            <Label Grid.Column="1"
+               LineBreakMode="WordWrap"
+               Text="{Binding StockMessage}"
+               TextColor ="{Binding StockMessageColour}"
+               FontAttributes="Bold"
+               TextTransform="Uppercase"
+               FontSize="25"
+               VerticalOptions="Center" 
+               HorizontalOptions="End"/>
+
+        </Grid>
+        
+        <!-- Add to cart button -->
+        <Button Grid.Row="4"
+            Text="{Binding ButtonText}"
+            BackgroundColor="{Binding ButtonColour}"
+            IsEnabled="{Binding CanBuy}"
+            TextTransform="Uppercase"
+            FontSize="25"
+            VerticalOptions="Center" 
+            HorizontalOptions="End" />
+    </Grid>
+</ContentPage>
